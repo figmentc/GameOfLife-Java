@@ -41,11 +41,11 @@ public class GOLBoard implements IGOLBoard{
                     for (int n = k - 1; n <= k+1; n++){
                         if (j < board_size && j >= 0 && n < board_size && n >= 0 &&
                                 board_array[j][n].isAlive() && !(j == i && n == k) ){
-                            if (trace){
-                                System.out.println("Neighbour Found");
-                                System.out.println(i + "," + k + " : " + j+ " " + n);
-
-                            }
+//                            if (trace){
+//                                System.out.println("Neighbour Found");
+//                                System.out.println(i + "," + k + " : " + j+ " " + n);
+//
+//                            }
                            
                             neighbour_count++;
                            
@@ -56,20 +56,17 @@ public class GOLBoard implements IGOLBoard{
                //Need to move collectively enforce instead of individually 
                 if (neighbour_count > 3 && board_array[i][k].isAlive()){
                     if (trace)
-                        System.out.println("Enforcing Overpopuation " + i + "," + k);
+                        System.out.println("Adding Enforcement Overpopuation " + i + "," + k);
                     enforcements.put(board_array[i][k], Rules.OverPopRule);
                 }
                 else if (neighbour_count < 2 && board_array[i][k].isAlive()){
                     if (trace)
-                        System.out.println("Enforcing Under popuation " + i + "," + k);
+                        System.out.println("Adding Enforcement Under Population " + i + "," + k);
                     enforcements.put(board_array[i][k], Rules.UnderPopRule);
-
-
-                    enforceUnderPop(board_array[i][k]);
                 }
-                else if (neighbour_count > 3 && !board_array[i][k].isAlive()){
+                else if (neighbour_count == 3 && !board_array[i][k].isAlive()){
                     if (trace)
-                        System.out.println("Enforcing Under popuation " + i + "," + k);
+                        System.out.println("Adding Enforcement Reproduction " + i + "," + k);
                     enforcements.put(board_array[i][k], Rules.ReproductionRule);
                 }
             }

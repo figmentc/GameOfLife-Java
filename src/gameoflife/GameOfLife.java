@@ -12,7 +12,7 @@ import java.awt.Point;
  */
 public class GameOfLife {
     
-    static final int BOARDSIZE = 10;
+    static final int BOARDSIZE = 20;
     /**
      * @param args the command line arguments
      */
@@ -21,11 +21,12 @@ public class GameOfLife {
         System.out.println("Initial: ");
 
         GOLBoard board = new GOLBoard(BOARDSIZE);
-        Point[] initialState = {new Point(5,5), new Point(5,6), new Point(6,6), new Point(6,5)};
+        Point[] initialState = {new Point(1,3), new Point(2,3), new Point(3,3), new Point(3, 2), new Point(2,1)};
         board.setState(initialState);
+        board.traceOn(true);
         board.printBoard();
         
-        for (int i = 0; i < 5; i ++){
+        for (int i = 0; i < 30; i ++){
             board.checkNeighbors();
             board.printBoard();
         }
