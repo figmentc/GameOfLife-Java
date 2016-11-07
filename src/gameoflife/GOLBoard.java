@@ -6,6 +6,8 @@
 package gameoflife;
 
 import java.awt.Point;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -29,6 +31,7 @@ public class GOLBoard implements IGOLBoard{
     
     @Override
     public void checkNeighbors() {
+        HashMap<Organism, Rules> enforcements = new HashMap<Organism, Rules>();
         for (int i = 0; i < board_size; i ++){
             for (int k = 0 ; k < board_size; k++){
                 int neighbour_count = 0;
@@ -50,34 +53,51 @@ public class GOLBoard implements IGOLBoard{
                     } 
                 }
                
-                
+               //Need to move collectively enforce instead of individually 
                 if (neighbour_count > 3 && board_array[i][k].isAlive()){
                     if (trace)
                         System.out.println("Enforcing Overpopuation " + i + "," + k);
-                    enforceOverPop(board_array[i][k]);
-                    
+                    enforcements.put(board_array[i][k], Rules.OverPopRule);
                 }
                 else if (neighbour_count < 2 && board_array[i][k].isAlive()){
                     if (trace)
                         System.out.println("Enforcing Under popuation " + i + "," + k);
+                    enforcements.put(board_array[i][k], Rules.UnderPopRule);
+
 
                     enforceUnderPop(board_array[i][k]);
                 }
                 else if (neighbour_count > 3 && !board_array[i][k].isAlive()){
                     if (trace)
                         System.out.println("Enforcing Under popuation " + i + "," + k);
-
-                    
-
-                    enforceRepro(board_array[i][k]);
+                    enforcements.put(board_array[i][k], Rules.ReproductionRule);
                 }
+            }
+            
+        }
+        enforceRules(enforcements);
+    }
+    
+    @Override 
+    public void enforceRules(HashMap<Organism, Rules> enforcements){
+        for (Map.Entry<Organism, Rules> entry: enforcements.entrySet()){
+            Rules value = entry.getValue();
+            Organism key = entry.getKey();
+            if (value == Rules.OverPopRule){
+                enforceOverPop(key);
+            }
+            else if(value == Rules.ReproductionRule){
+                enforceRepro(key);
+            }
+            else if (value==Rules.UnderPopRule){
+                enforceUnderPop(key);
             }
         }
     }
     
-
     @Override
     public void enforceUnderPop(Organism org) {
+        
         org.die();
     }
 
