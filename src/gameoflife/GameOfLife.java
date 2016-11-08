@@ -13,6 +13,7 @@ import java.awt.Point;
 public class GameOfLife {
     
     static final int BOARDSIZE = 20;
+    static int GENERATIONS = 20;
     /**
      * @param args the command line arguments
      */
@@ -26,13 +27,10 @@ public class GameOfLife {
         board.traceOn(true);
         board.printBoard();
         
-        for (int i = 0; i < 30; i ++){
+        for (int i = 0; i < GENERATIONS; i ++){
             board.checkNeighbors();
             board.printBoard();
         }
-        
-       
-    
     
     }
     

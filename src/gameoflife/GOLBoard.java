@@ -41,11 +41,11 @@ public class GOLBoard implements IGOLBoard{
                     for (int n = k - 1; n <= k+1; n++){
                         if (j < board_size && j >= 0 && n < board_size && n >= 0 &&
                                 board_array[j][n].isAlive() && !(j == i && n == k) ){
-//                            if (trace){
-//                                System.out.println("Neighbour Found");
-//                                System.out.println(i + "," + k + " : " + j+ " " + n);
-//
-//                            }
+                            if (trace){
+                                System.out.println("Neighbour Found");
+                                System.out.println(i + "," + k + " : " + j+ " " + n);
+
+                            }
                            
                             neighbour_count++;
                            
@@ -74,6 +74,7 @@ public class GOLBoard implements IGOLBoard{
         }
         enforceRules(enforcements);
     }
+    
     
     @Override 
     public void enforceRules(HashMap<Organism, Rules> enforcements){
